@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Session;
 
@@ -59,4 +60,34 @@ class ProductController extends Controller
         $data->delete();
         return redirect('cartlist');
     }
+
+    public function orderNow(){
+        $userId=Session::get('user')['id'];
+        $total = DB::table('carts')
+        ->join('products','carts.product_id','products.id')
+        ->select('products.*','carts.id as carts_id')
+        ->where('carts.user_id',$userId)
+        ->sum('products.price');
+        return view('ordernow',['total'=>$total]);
+    }
+
+    public function orderPlace(Request $req){
+        $userId=Session::get('user')['id'];
+        $allCart=Cart::where('user_id',$userId)->get();
+        foreach($allCart as $cart){
+            $order=new Order;
+            $order->product_id=$cart['product_id'];
+            $order->user_id=$cart['user_id'];
+            $order->address=$req->address;
+            $order->status="pending";
+            $order->payment_method=$req->payment_method;
+            $order->payment_status="pending";
+            $order->save();
+        }
+        $Cart=Cart::where('user_id',$userId)->delete();
+        return redirect('/');
+        
+    }
+
+
 }
