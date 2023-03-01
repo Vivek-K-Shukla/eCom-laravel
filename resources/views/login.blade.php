@@ -4,6 +4,9 @@
 <div class="container custom-login">
     <div class="row">
         <div class="col-sm-4 col-sm-offset-4">
+          @if(Session('status'))
+          <h4 class="bg bg-success">{{Session('status')}}</h4>
+          @endif
         <form action="login" method="POST">
           @csrf
   <div class="form-group">

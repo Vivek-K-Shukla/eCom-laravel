@@ -51,6 +51,18 @@
         margin-bottom:20px;
         padding-bottom:20px;
     }
+    .field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+.container{
+  padding-top:50px;
+  margin: auto;
+}
 
     </style>
 </html>

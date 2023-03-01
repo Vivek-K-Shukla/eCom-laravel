@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Session;
+use Hidden;
 
 class ProductController extends Controller
 {
@@ -32,7 +33,7 @@ class ProductController extends Controller
             $cart->user_id=$req->session()->get('user')['id'];
             $cart->product_id=$req->product_id;
             $cart->save();
-            return redirect('/');
+            return redirect('/cartlist');
         }
         else{
             return redirect('/login');
@@ -84,7 +85,7 @@ class ProductController extends Controller
             $order->payment_status="pending";
             $order->save();
         }
-        $Cart=Cart::where('user_id',$userId)->delete();
+        $Cart=Cart::where('user_id',$userId)->hidden();
         return redirect('/');
         
     }

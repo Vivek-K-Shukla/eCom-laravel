@@ -22,7 +22,7 @@ class UserController extends Controller
     public function login(Request $req){
         $user= User::where(['email'=>$req->email])->first();
         if(!$user||Hash::check($req->password,$user->password)){
-            return "Username or Password Doesn't matched!";
+            return view('/login')->with('status','Email or Password does not matched!');
         }
         else{
             $req->session()->put('user',$user);

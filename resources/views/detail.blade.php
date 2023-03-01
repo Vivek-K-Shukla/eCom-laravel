@@ -20,7 +20,7 @@
         <button type="submit" class="btn btn-success">ADD TO CART</button>
     </form>
     <br><br>
-    <button class="btn btn-primary">BUY NOW</button>
+    <button class="btn btn-primary"><a href="/cartlist">BUY NOW</a></button>
     <br><br>
 
 </div>
