@@ -8,6 +8,17 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function register(Request $req){
+        $user=new User;
+        $user->name=$req->name;
+        $user->email=$req->email;
+        $user->password=Hash::make($req->password);
+        $user->save();
+        return redirect('/login');
+        // return $req->input();
+    }
+
+
     public function login(Request $req){
         $user= User::where(['email'=>$req->email])->first();
         if(!$user||Hash::check($req->password,$user->password)){
@@ -17,6 +28,5 @@ class UserController extends Controller
             $req->session()->put('user',$user);
              return redirect('/');
         }
-
     }
 }
